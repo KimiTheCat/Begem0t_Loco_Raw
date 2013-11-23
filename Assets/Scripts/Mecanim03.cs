@@ -43,19 +43,19 @@ public class Mecanim03 : MonoBehaviour {
 
 		if (currentBaseState.nameHash == idleState)
 		{
-				Debug.Log("idle");
+				// Debug.Log("idle");
 
 		}
 
 		if (currentBaseState.nameHash == walkState)
 		{
-				Debug.Log("walk");
+				// Debug.Log("walk");
 			
 		}
 
 		if (currentBaseState.nameHash == runState)
 		{
-				Debug.Log("run");
+				// Debug.Log("run");
 			
 		}
 
