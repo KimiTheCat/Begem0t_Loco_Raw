@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Mecanim03 : MonoBehaviour {
+public class b9Mecanim03 : MonoBehaviour {
 
 	// public float animSpeed = 1.5f;				// a public setting for overall animator animation speed
 	public float DampTime = 25f;

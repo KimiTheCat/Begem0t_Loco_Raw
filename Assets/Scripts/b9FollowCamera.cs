@@ -30,6 +30,7 @@ public class b9FollowCamera : MonoBehaviour {
 	void Update () {
 		PositionChange ();
 
+
 		// return the camera to standard position and direction
 		transform.position = Vector3.Lerp(transform.position, targetPos.position+displace, Time.deltaTime * smooth);	
 		transform.forward = Vector3.Lerp(transform.forward, targetDir, Time.deltaTime * smooth);
@@ -60,7 +61,18 @@ public class b9FollowCamera : MonoBehaviour {
             displace.y = 2.5f;
 			displace.z = 0f;
 			targetDir = -targetPos.up;
+			}
+		//Camera Move
+		if(Input.GetKeyDown(KeyCode.Period)){
+			Debug.Log("right");
 		}
-		
+		if(Input.GetKeyDown(KeyCode.Comma)){
+			Debug.Log("left");
+		}
+
+		}
 	}
-}
+
+
+	
+
