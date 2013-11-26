@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class b9Camera2 : MonoBehaviour {
+public class b9CameraControl : MonoBehaviour {
 
 	float smooth = 2f;	    // a public variable to adjust smoothing of camera motion
 	float camDist = -1.7f;
 	float camHeight = .8f;
 	float rotPower = 0f;        //cameraNull rotation
 	float vertOffset = 0f;       //camer vertial offset
+	float dolly;
 
 	Transform avatarTransf;                       //target avatar object
 	Transform camNullTransf;                      //camera Parent object
@@ -30,7 +32,9 @@ public class b9Camera2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		camOffset = new Vector3(camNullTransf.position.x, camNullTransf.position.y-(vertOffset/1f), camNullTransf.position.z);   
+		dolly=(Math.Abs (cameraNull.transform.rotation.y));
+
+		camOffset = new Vector3(camNullTransf.position.x, camNullTransf.position.y-(vertOffset/1f), camNullTransf.position.z+dolly);   
 		lookTarget=new Vector3(avatarTransf.position.x,(avatarTransf.position.y+camHeight+(vertOffset/10f)),avatarTransf.position.z);   
 
 		//lerp Camera position
@@ -39,6 +43,7 @@ public class b9Camera2 : MonoBehaviour {
 		cameraNull.transform.RotateAround (avatarTransf.position, Vector3.up, rotPower);
 
 		PositionChange();
+
 	}
 
 	//Camera Control

@@ -46,15 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AnimScript.cs" />
-     <Compile Include="Assets\Scripts\Mecanim2.cs" />
-     <Compile Include="Assets\Scripts\MecanimBehaviour.cs" />
-     <Compile Include="Assets\Scripts\b9AttachedCamera.cs" />
-     <Compile Include="Assets\Scripts\b9Camera2.cs" />
-     <Compile Include="Assets\Scripts\b9CameraFollowParent.cs" />
-     <Compile Include="Assets\Scripts\b9CameraParent.cs" />
-     <Compile Include="Assets\Scripts\b9FollowCamera.cs" />
+     <Compile Include="Assets\Scripts\b9CameraControl.cs" />
      <Compile Include="Assets\Scripts\b9Mecanim03.cs" />
+     <Compile Include="Assets\Scripts\b9OnScreen.cs" />
+     <Compile Include="Assets\Scripts\old\AnimScript.cs" />
+     <Compile Include="Assets\Scripts\old\Mecanim2.cs" />
+     <Compile Include="Assets\Scripts\old\MecanimBehaviour.cs" />
      <None Include="Assets\Scripts\Snippets.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

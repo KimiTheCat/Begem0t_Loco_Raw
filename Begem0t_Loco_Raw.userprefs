@@ -1,11 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\b9Camera2.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Snippets.txt">
     <Files>
-      <File FileName="Assets\Scripts\Snippets.txt" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\b9CameraFollowParent.cs" Line="31" Column="3" />
-      <File FileName="Assets\Scripts\b9CameraParent.cs" Line="7" Column="1" />
-      <File FileName="Assets\Scripts\b9Camera2.cs" Line="34" Column="99" />
+      <File FileName="Assets\Scripts\Snippets.txt" Line="2" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
