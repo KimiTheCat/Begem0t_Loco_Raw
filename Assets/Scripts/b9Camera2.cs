@@ -3,14 +3,16 @@ using System.Collections;
 
 public class b9Camera2 : MonoBehaviour {
 
-	float smooth = 1.5f;	    // a public variable to adjust smoothing of camera motion
-	float camDist = -2f;
-	float camHeight = 1.1f;
+	float smooth = 2f;	    // a public variable to adjust smoothing of camera motion
+	float camDist = -1.7f;
+	float camHeight = .8f;
+	float rotPower = 0f;        //cameraNull rotation
+	float vertOffset = 0f;       //camer vertial offset
 
 	Transform avatarTransf;                       //target avatar object
 	Transform camNullTransf;                      //camera Parent object
-	Vector3 camLookOffset = new Vector3(0,1,0);   //camera LookAt offset
-
+	Vector3 camOffset;  //camera offset
+	Vector3 lookTarget;      //camera LookAt target position
 
 	public GameObject cameraNull;
 
@@ -28,11 +30,42 @@ public class b9Camera2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		camOffset = new Vector3(camNullTransf.position.x, camNullTransf.position.y-(vertOffset/1f), camNullTransf.position.z);   
+		lookTarget=new Vector3(avatarTransf.position.x,(avatarTransf.position.y+camHeight+(vertOffset/10f)),avatarTransf.position.z);   
+
 		//lerp Camera position
-		transform.position=Vector3.Lerp(transform.position, camNullTransf.position, Time.deltaTime * smooth);	
-		transform.LookAt(avatarTransf.position+camLookOffset, Vector3.up);
+		transform.position=Vector3.Lerp(transform.position, camOffset, Time.deltaTime * smooth);	
+		transform.LookAt(lookTarget, Vector3.up);
+		cameraNull.transform.RotateAround (avatarTransf.position, Vector3.up, rotPower);
+
+		PositionChange();
 	}
 
+	//Camera Control
+	void PositionChange () {
+		if (Input.GetKey(KeyCode.Period))
+		{
+			rotPower=rotPower-(2.5f * Time.deltaTime);
+		}
+		else if (Input.GetKey(KeyCode.Comma))
+		{
+			rotPower=rotPower+(2.5f * Time.deltaTime);
+		}
+		else
+		{
+			rotPower=0f;
+		}
+
+		if (Input.GetKey(KeyCode.Quote))
+		{
+			vertOffset=vertOffset-(1 * Time.deltaTime);
+		}
+		else if (Input.GetKey(KeyCode.Slash))
+		{
+			vertOffset=vertOffset+(1 * Time.deltaTime);
+		}
+
+	}
 
 }
 
