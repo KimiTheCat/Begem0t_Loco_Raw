@@ -6,7 +6,7 @@ public class b9CameraParent : MonoBehaviour {
 	public float smooth = 3f;	// a public variable to adjust smoothing of camera motion
 	float rotPower = 0f;
 
-	Transform targetPos;		// camera look-at object
+ 	public Transform targetPos;		// camera look-at object
 
 	//Vector3 targetDir;			// Direction of camera
 	//Vector3 displace;  			// position of camera relative to DefaultAvatar

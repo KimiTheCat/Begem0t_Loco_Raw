@@ -7,6 +7,10 @@ public class b9CameraFollowParent : MonoBehaviour {
 	Transform targetPos;		// camera look-at object
 	float camHeight_Y = .75f;    // height of camera
 
+
+	Vector3 CurrentForward;
+	float CurrentDirection;
+
 	void Start () {
 		targetPos = GameObject.Find ("CameraRotionParent").transform;
 
@@ -15,12 +19,15 @@ public class b9CameraFollowParent : MonoBehaviour {
 		displace.z = -2f;
 //		targetDir = targetPos.forward;
 
+
 		transform.position=targetPos.position+displace;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		CurrentForward=targetPos.forward;
+		CurrentDirection=targetPos.rotation.x; // transform.rotation.y;
+		Debug.Log (CurrentForward);
 	}
 	
 }

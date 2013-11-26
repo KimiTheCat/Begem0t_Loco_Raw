@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{ACC845A2-B6A8-8741-8143-DB3F27A28150}</ProjectGuid>
+	<ProjectGuid>{873A9255-CDA5-CE86-E622-DECB4587134B}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,15 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AnimScript.cs" />
-     <Compile Include="Assets\Scripts\Mecanim2.cs" />
-     <Compile Include="Assets\Scripts\MecanimBehaviour.cs" />
-     <Compile Include="Assets\Scripts\b9AttachedCamera.cs" />
-     <Compile Include="Assets\Scripts\b9Camera2.cs" />
-     <Compile Include="Assets\Scripts\b9CameraFollowParent.cs" />
-     <Compile Include="Assets\Scripts\b9CameraParent.cs" />
-     <Compile Include="Assets\Scripts\b9FollowCamera.cs" />
-     <Compile Include="Assets\Scripts\b9Mecanim03.cs" />
+     <Compile Include="Assets\Scripts\Camera Scripts\MouseOrbit.js" />
+     <Compile Include="Assets\Scripts\Camera Scripts\SmoothFollow.js" />
+     <Compile Include="Assets\Scripts\Camera Scripts\SmoothLookAt.js" />
      <None Include="Assets\Scripts\Snippets.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
