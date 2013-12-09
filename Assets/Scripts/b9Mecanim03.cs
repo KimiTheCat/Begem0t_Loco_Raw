@@ -7,13 +7,16 @@ public class b9Mecanim03 : MonoBehaviour {
     public float DampTime = 3f;
 	private Animator anim;							// a reference to the animator on the character
     private AnimatorStateInfo animState;			// a reference to the current state of the animator, used for base layer
+    float h = 0f;				// setup h variable as our horizontal input axis
+    float v = 0f;				// setup v variables as our vertical input axis
 
     //animation state hashes
 	static int idleState = Animator.StringToHash("Base Layer.Stand_Idle");
     static int idleStateSwitchFeet = Animator.StringToHash("Base Layer.Stand_Idle (change feet)");
-	static int walkRunState = Animator.StringToHash("WALK-RUN.Walk-Run");
+    static int walkRunState = Animator.StringToHash("WALK-RUN.WALK-RUN");   //Walk-Run
     static int stand2walkState = Animator.StringToHash("WALK-RUN.Stand-2-Walk");
     static int walkState = Animator.StringToHash("WALK-RUN.Walk");
+    static int standTurnState = Animator.StringToHash("TURN_ON_PLACE.TURN_SLOW_FAST"); //"TURN_ON_PLACE.STAND_TURN"   //"Base Layer.TUN" 
 
 	// Use this for initialization
 	void Start () 
@@ -34,38 +37,65 @@ public class b9Mecanim03 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		//Input.GetAxis("Horizontal");				// setup h variable as our horizontal input axis
-		//Input.GetAxis("Vertical");				// setup v variables as our vertical input axis
-        anim.SetFloat("Speed", Input.GetAxis("Vertical"));							// set our animator's float parameter 'Speed' equal to the vertical input axis				
-        anim.SetFloat("Direction", Input.GetAxis("Horizontal"), DampTime, Time.deltaTime); 						// set our animator's float parameter 'Direction' equal to the horizontal input axis		
+        h = Input.GetAxis("Horizontal");				// setup h variable as our horizontal input axis
+        v = Input.GetAxis("Vertical");				// setup v variables as our vertical input axis
+        anim.SetFloat("Speed", v);							// set our animator's float parameter 'Speed' equal to the vertical input axis				
+        anim.SetFloat("Direction", h); 						// set our animator's float parameter 'Direction' equal to the horizontal input axis		
+
+        //anim.SetFloat("Speed", Input.GetAxis("Vertical"));							// set our animator's float parameter 'Speed' equal to the vertical input axis				
+        //anim.SetFloat("Direction", Input.GetAxis("Horizontal"), DampTime, Time.deltaTime); 						// set our animator's float parameter 'Direction' equal to the horizontal input axis		
         animState = anim.GetCurrentAnimatorStateInfo(0);	// set our currentState variable to the current state of the Base Layer (0) of animation
 
-        //Logic_IfBased();
         LogicStates();
     }
 
     void LogicStates() {
         if (animState.nameHash == idleState)
 		{
+            //print("horiz: " + h.ToString());
+            // to Turn on place
+            if (h != 0f) //(!Input.anyKeyDown)
+            {
+                anim.CrossFade(standTurnState, 0f, -1, 0f);
+                print("turn");
+            }
             //Idle variations
-                if (Input.GetKey(KeyCode.I)) //(!Input.anyKeyDown)
-                {
-                    anim.CrossFade(idleStateSwitchFeet, .3f, -1, 0f);
-                }
-			// to Alert
+            else if (Input.GetKey(KeyCode.I)) //(!Input.anyKeyDown)
+            {
+                anim.CrossFade(idleStateSwitchFeet, .3f, -1, 0f);
+            }
+
+            // to Alert
             // to Sidestep
             // to Run - direct if shift pressed go directly to start-2-run
-            // to Turn on place
+
             // to Look Left, Right, Over Shoulder
             // to Walk
 		}
 
+        if (animState.nameHash == standTurnState)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))		//While LeftShift pressed
+            {
+                anim.SetFloat("Shift", 1f, DampTime, Time.deltaTime);
+            }
+            else
+            {
+                anim.SetFloat("Shift", 0f, DampTime, Time.deltaTime);
+            }
+
+            if (h == 0f)
+            {
+                anim.CrossFade(idleState, 0f, -1, 0f);
+            }
+
+        }
 
         if (animState.nameHash == stand2walkState)
         {
-            if (Input.GetAxis("Vertical") == 0 && Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow))   //(Input.GetAxis("Vertical") == 0 && Input.GetKey(KeyCode.DownArrow))
             {
-                anim.CrossFade(idleState, .2f, -1, .1f);
+                anim.CrossFade(standTurnState, .2f, -1, .1f);
             }
             //Debug.Log("trans");
 
@@ -73,13 +103,14 @@ public class b9Mecanim03 : MonoBehaviour {
 
         if (animState.nameHash == walkRunState)
 		{
+            //print("walkrun state");
             if (Input.GetKey(KeyCode.LeftShift))		//While LeftShift pressed
             {
-                anim.SetFloat("Walk-Run", 1f, DampTime, Time.deltaTime);
+                anim.SetFloat("Shift", 1f, DampTime, Time.deltaTime);
             }
             else
             {
-                anim.SetFloat("Walk-Run", 0f, DampTime, Time.deltaTime);
+                anim.SetFloat("Shift", 0f, DampTime, Time.deltaTime);
             }
 
             //Debug.Log("walkRun");
@@ -88,18 +119,5 @@ public class b9Mecanim03 : MonoBehaviour {
 
 	}
     
-
-    //void Logic_IfBased() //no, thanx
-    //{
-    //    if (Input.GetKey(KeyCode.LeftShift))		//While LeftShift pressed
-    //    {
-    //        //anim.SetBool("Sprint", true);					//Turn on boolean
-    //        anim.SetFloat("Walk-Run", 1f, DampTime, Time.deltaTime);
-    //    }
-    //    else
-    //    {
-    //        anim.SetFloat("Walk-Run", 0f, DampTime, Time.deltaTime);
-    //    }
-    //}
 
 }
