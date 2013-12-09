@@ -26,10 +26,13 @@ public class b9OnScreen : MonoBehaviour {
 //		GUI.Label(new Rect(10,55, 100,40), "Direction:"+d);
 		
 		GUI.Label(new Rect(10,10, 100,120), "KEYBOARD");
-		GUI.Label(new Rect(10,40, 200,120), "Arrows, WASD : Move avatar");		
-		GUI.Label(new Rect(10,60, 160,120), "LeftShift  : Run");
-		GUI.Label(new Rect(10,80, 160,120), "< >  : Camera Left/Right");
-		GUI.Label(new Rect(10,100, 160,120), "\" ?  : Camera Up/Down");
+        GUI.Label(new Rect(10, 40, 160, 120), "Camera Left/Right : < >");
+        GUI.Label(new Rect(10, 60, 160, 120), "Camera Up/Down : \" ?");
+
+        GUI.Label(new Rect(10, 80, 200, 120), "Move avatar : Arrows, WASD");
+        GUI.Label(new Rect(10, 100, 160, 120), "Run : LeftShift");
+        GUI.Label(new Rect(10, 120, 160, 120), "Change Idle : I key");
+
 
 //		GUI.Label(new Rect(10,130, 160,120), "Z/X: Zoom camera");
 //		GUI.Label(new Rect(10,150, 160,120), "R  : Reset avatar");

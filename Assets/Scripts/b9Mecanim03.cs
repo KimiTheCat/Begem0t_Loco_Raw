@@ -4,20 +4,32 @@ using System.Collections;
 public class b9Mecanim03 : MonoBehaviour {
 
 	// public float animSpeed = 1.5f;				// a public setting for overall animator animation speed
-	public float DampTime = 25f;
+    public float DampTime = 3f;
 	private Animator anim;							// a reference to the animator on the character
     private AnimatorStateInfo animState;			// a reference to the current state of the animator, used for base layer
 
     //animation state hashes
-	static int idleState = Animator.StringToHash("Base Layer.Stand_Idle");	
+	static int idleState = Animator.StringToHash("Base Layer.Stand_Idle");
+    static int idleStateSwitchFeet = Animator.StringToHash("Base Layer.Stand_Idle (change feet)");
 	static int walkRunState = Animator.StringToHash("WALK-RUN.Walk-Run");
     static int stand2walkState = Animator.StringToHash("WALK-RUN.Stand-2-Walk");
+    static int walkState = Animator.StringToHash("WALK-RUN.Walk");
 
 	// Use this for initialization
 	void Start () 
 	{
 		anim = GetComponent<Animator>();
     }
+
+    IEnumerator WaitSec()
+    {
+        float waitTime = Random.Range(0.0f, 100.0f);
+        yield return new WaitForSeconds(waitTime);
+
+        //yield return new WaitForSeconds(5);
+        print(Time.time);
+    }
+
 	
 	// Update is called once per frame
 	void Update () 
@@ -35,6 +47,11 @@ public class b9Mecanim03 : MonoBehaviour {
     void LogicStates() {
         if (animState.nameHash == idleState)
 		{
+            //Idle variations
+                if (Input.GetKey(KeyCode.I)) //(!Input.anyKeyDown)
+                {
+                    anim.CrossFade(idleStateSwitchFeet, .3f, -1, 0f);
+                }
 			// to Alert
             // to Sidestep
             // to Run - direct if shift pressed go directly to start-2-run
@@ -48,13 +65,24 @@ public class b9Mecanim03 : MonoBehaviour {
         {
             if (Input.GetAxis("Vertical") == 0 && Input.GetKey(KeyCode.DownArrow))
             {
-                anim.CrossFade(idleState, .1f, -1, .5f);
+                anim.CrossFade(idleState, .2f, -1, .1f);
             }
+            //Debug.Log("trans");
+
         }
 
         if (animState.nameHash == walkRunState)
 		{
-				//Debug.Log("walk");
+            if (Input.GetKey(KeyCode.LeftShift))		//While LeftShift pressed
+            {
+                anim.SetFloat("Walk-Run", 1f, DampTime, Time.deltaTime);
+            }
+            else
+            {
+                anim.SetFloat("Walk-Run", 0f, DampTime, Time.deltaTime);
+            }
+
+            //Debug.Log("walkRun");
 			
 		}
 
