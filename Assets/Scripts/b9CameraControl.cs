@@ -4,63 +4,63 @@ using System;
 
 public class b9CameraControl : MonoBehaviour {
 
-	float smooth = 2f;	    // a public variable to adjust smoothing of camera motion
-	float camDist = -1.7f;
-	float camHeight = .8f;
-	float rotPower = 0f;        //cameraNull rotation
-	float vertOffset = 0f;       //camer vertial offset
-	float dolly;
+	float smooth = 5f;	            // 0 - infinity, 10 almost instant, default 2 - a public variable to adjust smoothing of camera motion
+	float camDist = -1.7f;          //Initial Camera distance
+	float camHeight = .8f;          //Initial Camera height
+	float rotAround = 0f;           //cameraParent rotation around target
+	float vertOffset = 0f;          //camera vertial offset
+    float cameraZoom = 60f;         //camera FieldOfView
 
-	Transform avatarTransf;                       //target avatar object
-	Transform camNullTransf;                      //camera Parent object
-	Vector3 camOffset;  //camera offset
-	Vector3 lookTarget;      //camera LookAt target position
+	Transform avatarTransf;         //target avatar's transform
+    //Transform avatarLookAt;         //target avatar's hips
 
-	public GameObject cameraNull;
+    Vector3 camOffset;              //camera offset
+    Vector3 targetPos;              //target offset
+    Vector3 LookAtTarget;
 
-	// Use this for initialization
+    public GameObject cameraParent;     //camera's parent object
+
 	void Start () {
-		cameraNull = new GameObject("cameraNull");                   //create camera parent object
-		camNullTransf = GameObject.Find ("cameraNull").transform;    //get camera parent transform
-		avatarTransf = GameObject.Find ("DefaultAvatar").transform;  //get target avatar transform
+        //Create camera hierarchy
+        cameraParent = new GameObject("cameraParent");              //create camera's parent object at 0,0,0
+        camOffset = new Vector3(0f, camHeight, camDist);                   //define the camera offset
+        transform.position = camOffset;                             //reposition camera relative to 0,0,0
+        transform.parent = cameraParent.transform;                  //parent camera to cameraParent, so that it follows avatar
 
-		//parent cameraNull to the avatar
-		cameraNull.transform.parent=avatarTransf;
-		cameraNull.transform.localPosition=new Vector3(0, camHeight, camDist); //cameraNull.transform.localPosition=-Vector3.forward*1;
+        avatarTransf = GameObject.Find("DefaultAvatar").transform;  //get target avatar's transform
+        //avatarLookAt = GameObject.Find("DefaultAvatar/Reference/Hips").transform;  //get target avatar's transform
 
-	}
+    }
 	
-	// Update is called once per frame
 	void Update () {
-		dolly=(Math.Abs (cameraNull.transform.rotation.y));
+        //follow Avatar with Camera 
+        targetPos= new Vector3(avatarTransf.position.x, avatarTransf.position.y-vertOffset, avatarTransf.position.z);
+        cameraParent.transform.position = Vector3.Lerp(cameraParent.transform.position, targetPos, smooth * Time.deltaTime); 
+        cameraParent.transform.rotation = Quaternion.Slerp(cameraParent.transform.rotation, avatarTransf.rotation * Quaternion.Euler(0f, rotAround, 0f), smooth * Time.deltaTime); 
 
-		camOffset = new Vector3(camNullTransf.position.x, camNullTransf.position.y-(vertOffset/1f), camNullTransf.position.z+dolly);   
-		lookTarget=new Vector3(avatarTransf.position.x,(avatarTransf.position.y+camHeight+(vertOffset/10f)),avatarTransf.position.z);   
+        //zoom Camera in and out
+        camera.fieldOfView = cameraZoom;
 
-		//lerp Camera position
-		transform.position=Vector3.Lerp(transform.position, camOffset, Time.deltaTime * smooth);	
-		transform.LookAt(lookTarget, Vector3.up);
-		cameraNull.transform.RotateAround (avatarTransf.position, Vector3.up, rotPower);
+        //tweak Camera up and down 
+        LookAtTarget = new Vector3(avatarTransf.position.x, avatarTransf.position.y + camHeight + (vertOffset/10), avatarTransf.position.z);
+        transform.LookAt(LookAtTarget);
 
-		PositionChange();
 
+        PositionChange();
 	}
 
 	//Camera Control
 	void PositionChange () {
+        //Rotate Camera Around
 		if (Input.GetKey(KeyCode.Period))
 		{
-			rotPower=rotPower-(2.5f * Time.deltaTime);
+            rotAround = rotAround - (100f * Time.deltaTime);
 		}
 		else if (Input.GetKey(KeyCode.Comma))
 		{
-			rotPower=rotPower+(2.5f * Time.deltaTime);
+            rotAround = rotAround + (100f * Time.deltaTime);
 		}
-		else
-		{
-			rotPower=0f;
-		}
-
+        //Camera up and down
 		if (Input.GetKey(KeyCode.Quote))
 		{
 			vertOffset=vertOffset-(1 * Time.deltaTime);
@@ -69,6 +69,22 @@ public class b9CameraControl : MonoBehaviour {
 		{
 			vertOffset=vertOffset+(1 * Time.deltaTime);
 		}
+        //Camera Zoom
+        if (Input.GetKey(KeyCode.PageUp))
+        {
+            cameraZoom = cameraZoom - (10 * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.PageDown))
+        {
+            cameraZoom = cameraZoom + (10 * Time.deltaTime);
+        }
+        //Reset Camera
+        if (Input.GetKey(KeyCode.Home))
+        {
+            rotAround = 0f;
+            vertOffset = 0f;
+            cameraZoom = 60f;
+        }
 
 	}
 

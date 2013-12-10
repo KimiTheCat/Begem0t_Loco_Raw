@@ -30,7 +30,7 @@ public class b9Mecanim03 : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
 
         //yield return new WaitForSeconds(5);
-        print(Time.time);
+        //print(Time.time);
     }
 
 	
@@ -57,7 +57,7 @@ public class b9Mecanim03 : MonoBehaviour {
             if (h != 0f) //(!Input.anyKeyDown)
             {
                 anim.CrossFade(standTurnState, 0f, -1, 0f);
-                print("turn");
+                //print("turn");
             }
             //Idle variations
             else if (Input.GetKey(KeyCode.I)) //(!Input.anyKeyDown)

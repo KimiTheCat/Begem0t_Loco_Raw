@@ -49,9 +49,6 @@
      <Compile Include="Assets\Scripts\b9CameraControl.cs" />
      <Compile Include="Assets\Scripts\b9Mecanim03.cs" />
      <Compile Include="Assets\Scripts\b9OnScreen.cs" />
-     <Compile Include="Assets\Scripts\old\AnimScript.cs" />
-     <Compile Include="Assets\Scripts\old\Mecanim2.cs" />
-     <Compile Include="Assets\Scripts\old\MecanimBehaviour.cs" />
      <None Include="Assets\Scripts\Snippets.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -219,3 +219,5 @@ pip-log.txt
 #############
 
 Library/
+[Tt]emp/
+*.sln
