@@ -9,14 +9,17 @@ public class b9Mecanim03 : MonoBehaviour {
     private AnimatorStateInfo animState;			// a reference to the current state of the animator, used for base layer
     float h = 0f;				// setup h variable as our horizontal input axis
     float v = 0f;				// setup v variables as our vertical input axis
+    public bool Altkey = false;     //is alt key pessed
 
     //animation state hashes
 	static int idleState = Animator.StringToHash("Base Layer.Stand_Idle");
-    static int idleStateSwitchFeet = Animator.StringToHash("Base Layer.Stand_Idle (change feet)");
+    static int idleSwitchFeetState = Animator.StringToHash("Base Layer.Stand_Idle (change feet)");
+    static int standAlertState= Animator.StringToHash("Base Layer.Alert");
+    static int sideStepState = Animator.StringToHash("SIDESTEP.SideStep");
     static int walkRunState = Animator.StringToHash("WALK-RUN.WALK-RUN");   //Walk-Run
     static int stand2walkState = Animator.StringToHash("WALK-RUN.Stand-2-Walk");
     static int walkState = Animator.StringToHash("WALK-RUN.Walk");
-    static int standTurnState = Animator.StringToHash("TURN_ON_PLACE.TURN_SLOW_FAST"); //"TURN_ON_PLACE.STAND_TURN"   //"Base Layer.TUN" 
+    static int standTurnState = Animator.StringToHash("TURN_ON_SPOT.TURN_ON_SPOT"); //"TURN_ON_PLACE.STAND_TURN"   //"Base Layer.TUN" 
 
 	// Use this for initialization
 	void Start () 
@@ -49,12 +52,29 @@ public class b9Mecanim03 : MonoBehaviour {
         LogicStates();
     }
 
+    void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.alt)
+        {
+            if (Application.platform == RuntimePlatform.OSXEditor)
+                //Debug.Log("Option key was pressed");
+                Altkey = true;
+            else
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                    //Debug.Log("Alt Key was pressed!");
+                    Altkey = true;
+        }
+        else
+            Altkey = false;
+
+    }
+
     void LogicStates() {
         if (animState.nameHash == idleState)
 		{
-            //print("horiz: " + h.ToString());
             // to Turn on place
-            if (h != 0f) //(!Input.anyKeyDown)
+            if (Altkey == false && h != 0f) //(!Input.anyKeyDown)
             {
                 anim.CrossFade(standTurnState, 0f, -1, 0f);
                 //print("turn");
@@ -62,11 +82,19 @@ public class b9Mecanim03 : MonoBehaviour {
             //Idle variations
             else if (Input.GetKey(KeyCode.I)) //(!Input.anyKeyDown)
             {
-                anim.CrossFade(idleStateSwitchFeet, .3f, -1, 0f);
+                anim.CrossFade(idleSwitchFeetState, .3f, -1, 0f);
             }
 
             // to Alert
+            else if (Input.GetKey(KeyCode.L)) //
+            {
+                anim.CrossFade(standAlertState, .3f, -1, 0f);
+            }
             // to Sidestep
+            if (Altkey == true && h != 0f)
+            {
+                anim.CrossFade(sideStepState, 0f, -1, 0f);
+            }
             // to Run - direct if shift pressed go directly to start-2-run
 
             // to Look Left, Right, Over Shoulder

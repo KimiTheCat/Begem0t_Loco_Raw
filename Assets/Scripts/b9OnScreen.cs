@@ -46,6 +46,7 @@ public class b9OnScreen : MonoBehaviour {
         GUI.Label(new Rect(10, 140, 200, 120), "Move avatar : Arrows, WASD", mainStyle);
         GUI.Label(new Rect(10, 160, 200, 120), "SpeedUp : LeftShift", mainStyle);
         GUI.Label(new Rect(10, 180, 200, 120), "Change Idle : I key", mainStyle);
+        GUI.Label(new Rect(10, 200, 200, 120), "Alert : L key", mainStyle);
 
 
 //		GUI.Label(new Rect(10,130, 160,120), "Z/X: Zoom camera");
