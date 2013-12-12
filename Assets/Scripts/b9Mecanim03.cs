@@ -55,19 +55,25 @@ public class b9Mecanim03 : MonoBehaviour {
     void OnGUI()
     {
         Event e = Event.current;
-        if (e.alt)
+        if (e.alt)      //Strafing in Animator
         {
             if (Application.platform == RuntimePlatform.OSXEditor)
-                //Debug.Log("Option key was pressed");
-                Altkey = true;
+                {
+                    Altkey = true;
+                    anim.SetBool("Alt", true);      
+                }
             else
                 if (Application.platform == RuntimePlatform.WindowsEditor)
-                    //Debug.Log("Alt Key was pressed!");
+                {
                     Altkey = true;
+                    anim.SetBool("Alt", true);
+                }
         }
         else
+        {
             Altkey = false;
-
+            anim.SetBool("Alt", false);
+        }
     }
 
     void LogicStates() {
@@ -90,12 +96,7 @@ public class b9Mecanim03 : MonoBehaviour {
             {
                 anim.CrossFade(standAlertState, .3f, -1, 0f);
             }
-            // to Sidestep
-            if (Altkey == true && h != 0f)
-            {
-                anim.CrossFade(sideStepState, 0f, -1, 0f);
-            }
-            // to Run - direct if shift pressed go directly to start-2-run
+            // to Sidestep -- implemented in Animator
 
             // to Look Left, Right, Over Shoulder
             // to Walk
