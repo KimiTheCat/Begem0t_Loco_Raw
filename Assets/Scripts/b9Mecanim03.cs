@@ -16,10 +16,11 @@ public class b9Mecanim03 : MonoBehaviour {
     static int idleSwitchFeetState = Animator.StringToHash("Base Layer.Stand_Idle (change feet)");
     static int standAlertState= Animator.StringToHash("Base Layer.Alert");
     static int sideStepState = Animator.StringToHash("SIDESTEP.SideStep");
-    static int walkRunState = Animator.StringToHash("WALK-RUN.WALK-RUN");   //Walk-Run
+    static int walkRunState = Animator.StringToHash("WALK-RUN.WALK-RUN");
+    static int walkRunBackState = Animator.StringToHash("WALK_BACK.WALK-RUN-BACK");   
     static int stand2walkState = Animator.StringToHash("WALK-RUN.Stand-2-Walk");
     static int walkState = Animator.StringToHash("WALK-RUN.Walk");
-    static int standTurnState = Animator.StringToHash("TURN_ON_SPOT.TURN_ON_SPOT"); //"TURN_ON_PLACE.STAND_TURN"   //"Base Layer.TUN" 
+    static int standTurnState = Animator.StringToHash("TURN_ON_SPOT.TURN_ON_SPOT"); 
 
 	// Use this for initialization
 	void Start () 
@@ -58,10 +59,10 @@ public class b9Mecanim03 : MonoBehaviour {
         if (e.alt)      //Strafing in Animator
         {
             if (Application.platform == RuntimePlatform.OSXEditor)
-                {
-                    Altkey = true;
-                    anim.SetBool("Alt", true);      
-                }
+            {
+                Altkey = true;
+                anim.SetBool("Alt", true);
+            }
             else
                 if (Application.platform == RuntimePlatform.WindowsEditor)
                 {
@@ -146,6 +147,20 @@ public class b9Mecanim03 : MonoBehaviour {
 			
 		}
 
+        if (animState.nameHash == walkRunBackState)
+        {
+            //print("walkrunBack state");
+            if (Input.GetKey(KeyCode.LeftShift))		//While LeftShift pressed
+            {
+                anim.SetFloat("Shift", 1f, DampTime, Time.deltaTime);
+            }
+            else
+            {
+                anim.SetFloat("Shift", 0f, DampTime, Time.deltaTime);
+            }
+
+
+        }
 	}
     
 

@@ -5,7 +5,7 @@ using System;
 public class b9CameraControl : MonoBehaviour {
 
 	float smooth = 5f;	            // 0 - infinity, 10 almost instant, default 2 - a public variable to adjust smoothing of camera motion
-	float camDist = -1.7f;          //Initial Camera distance
+	float camDist = -2.5f;          //Initial Camera distance
 	float camHeight = .8f;          //Initial Camera height
 	float rotAround = 0f;           //cameraParent rotation around target
 	float vertOffset = 0f;          //camera vertial offset
